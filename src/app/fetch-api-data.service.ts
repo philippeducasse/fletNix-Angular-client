@@ -6,6 +6,8 @@ import { map } from 'rxjs/operators';
 
 //Declaring the api url that will provide data for the client app
 const apiUrl = 'https://fletnix-s949.onrender.com/';
+// @ are called decorators, tells Angular to use data from above imports for styling
+// additionally, this tells angular that this service will be available everywhere ('root')
 @Injectable({
   providedIn: 'root'
 })
@@ -29,6 +31,7 @@ export class FetchApiDataService {
 
   // api call for the user login enpoint
   public userLogin(userDetails: any): Observable<any> {
+    console.log(userDetails)
     return this.http.post(apiUrl + 'login?' + new URLSearchParams(userDetails), {}).pipe(
       catchError(this.handleError)
     );
