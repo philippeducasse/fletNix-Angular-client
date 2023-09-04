@@ -1,3 +1,11 @@
+### NOTES ON WIP
+
+- update profile is not working correctly (JSON.parse: unexpected keyword at line 1 column 1 of the JSON data)
+- update image size of movie cards
+- fix menu 
+- what gets stored on localstorage?? jets the "user" or entire user object?? => this is influencing all the api calls
+
+
 # FletNixAngularClient
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.0.

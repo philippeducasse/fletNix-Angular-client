@@ -4,7 +4,7 @@ import { Component, OnInit, Input } from '@angular/core';
 // You'll use this import to close the dialog on success
 import { MatDialogRef } from '@angular/material/dialog';
 
-// This import brings in the API calls created in detch-api-services.ts
+// This import brings in the API calls created in fetch-api-services.ts
 import { FetchApiDataService } from '../fetch-api-data.service';
 
 // This import is used to display notifications back to the user
@@ -22,27 +22,31 @@ export class UserRegistrationFormComponent implements OnInit {
   // this is then connected in the template with the directive [(ngModel)]
   @Input() userData = { Username: '', Password: '', Email: '', Birthday: '' };
 
-constructor(
+  constructor(
     public fetchApiData: FetchApiDataService,
     public dialogRef: MatDialogRef<UserRegistrationFormComponent>,
     public snackBar: MatSnackBar) { }
 
-ngOnInit(): void {
-}
+  ngOnInit(): void {
+  }
 
-// This is the function responsible for sending the form inputs to the backend
-registerUser(): void {
-    this.fetchApiData.userRegistration(this.userData).subscribe((result) => {
-  // Logic for a successful user registration goes here! (To be implemented)
-     this.dialogRef.close(); // This will close the modal on success!
-     this.snackBar.open(result, 'OK', {
-        duration: 2000
-     });
-    }, (result) => {
-      this.snackBar.open(result, 'OK', {
-        duration: 2000
-      });
+  // This is the function responsible for sending the form inputs to the backend
+  registerUser(): void {
+    this.fetchApiData.userRegistration(this.userData).subscribe({
+      next: (result) => {
+        // Logic for a successful user registration goes here! (To be implemented)
+        this.dialogRef.close(); // This will close the modal on success!
+        this.snackBar.open(result, 'OK', {
+          duration: 2000
+        });
+      },
+      error: (error) => {
+        // Handle errors here
+        this.snackBar.open(error, 'Error', { // Provide a more informative message
+          duration: 2000
+        });
+      }
     });
   }
 
-  }
+}

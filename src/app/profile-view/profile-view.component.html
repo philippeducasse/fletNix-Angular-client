@@ -1,0 +1,77 @@
+<mat-card>
+    <mat-menu #appMenu="matMenu">
+        <button 
+        mat-menu-item
+        routerLink="/movies"
+        >
+        All Movies
+            </button>
+        <button mat-menu-item>Logout</button>
+      </mat-menu>
+      
+      <button mat-icon-button [matMenuTriggerFor]="appMenu">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+    <mat-card-header>
+      <mat-card-title>Update your profile</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form>
+        <mat-form-field>
+          <input
+            matInput
+            [(ngModel)]="userData.Username"
+            placeholder="userData.Username"
+            type="text"
+            name="Username"
+            required
+          >
+          </mat-form-field>
+          <mat-form-field>
+          <input
+            matInput
+            [(ngModel)]="userData.Password"
+            type = "password"
+            placeholder="Password"
+            name="Password"
+            required
+          >
+        </mat-form-field>
+        <mat-form-field>
+          <input
+            matInput
+            [(ngModel)]="userData.Email"
+            type = "email"
+            placeholder="update your Email"
+            name="Email"
+            required
+          >
+        </mat-form-field>
+        <mat-form-field>
+          <input
+            matInput
+            [(ngModel)]="userData.Birthday"
+            type = "date"
+            placeholder="update your Birthday"  
+            name="Birthday"
+          >
+        </mat-form-field>
+      </form>
+    </mat-card-content>
+    <mat-card-actions>
+        <button
+          mat-raised-button
+          (click)="updateUser()"
+          color="primary"
+        >
+          update
+        </button>
+        <button
+          mat-raised-button
+          (click)="deleteUser()"
+          color="danger"
+        >
+          delete profile
+        </button>
+    </mat-card-actions>
+  </mat-card>
