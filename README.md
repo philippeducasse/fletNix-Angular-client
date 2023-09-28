@@ -22,6 +22,12 @@ Run `ng generate component component-name` to generate a new component. You can 
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
+## Deploy 
+
+This project is hosting using gh pages:
+
+npx ngh --dir=dist/flet-nix-angular-client  
+
 ## Running unit tests
 
 Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
