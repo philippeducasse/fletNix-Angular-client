@@ -2,6 +2,9 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FetchApiDataService } from '../fetch-api-data.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
+
+type User = { _id?: string, Username?: string, Password?: string, Email?: string, Birthday?: any, Favorites?: Array<any> }
 
 @Component({
   selector: 'app-profile-view',
@@ -9,14 +12,34 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./profile-view.component.scss']
 })
 export class ProfileViewComponent implements OnInit{
-  @Input() userData = { Username: '', Password: '', Email: '', Birthday: '' };
-  @Input() favoriteMovies = '' // PLACEHOLDER
+  user: User = {};
+  @Input() userData = { Username: '', Password: '', Email: '', Birthday: '', Favorites: [] as Array<any> };
+  // @Input() favoriteMovies = [];
+  
 
   constructor(
     public fetchApiData: FetchApiDataService,
-    public snackBar: MatSnackBar) { }
+    public snackBar: MatSnackBar,
+    public router: Router,) { }
 
-  ngOnInit(): void {
+    ngOnInit(): void {
+      const user = this.getUser();
+  
+      this.user = user;
+      this.userData = {
+        Username: user.Username || "",
+        Email: user.Email || "",
+        Password: "",
+        Birthday: user.Birthday || "",
+        Favorites: user.Favorites || [],
+      }
+      console.log(user)
+      console.log(this.userData.Favorites)
+    
+    }
+
+  getUser(): User {
+    return JSON.parse(localStorage.getItem('user') || '{}');
   }
   // logic for update user function
   updateUser(): void {
@@ -50,21 +73,25 @@ export class ProfileViewComponent implements OnInit{
       }
     });
   }
-
   // remove movie from favorites
 
-  removeFromFavorites(): void {
-    this.fetchApiData.deleteFavoriteMovie(this.favoriteMovies).subscribe({
-      next: (result) => {
-        this.snackBar.open(result, 'OK', {
-          duration: 2000
-        });
-      },
-      error: (error) => {
-        this.snackBar.open(error, 'Error', {
-          duration: 2000
-        });
-      }
-    });
+  //should be (movies: any?)
+  // removeFromFavorites(): void {
+  //   this.fetchApiData.deleteFavoriteMovie(this.favoriteMovies).subscribe({
+  //     next: (result) => {
+  //       this.snackBar.open(result, 'OK', {
+  //         duration: 2000
+  //       });
+  //     },
+  //     error: (error) => {
+  //       this.snackBar.open(error, 'Error', {
+  //         duration: 2000
+  //       });
+  //     }
+  //   });
+  // }
+  logoutUser(): void {
+    localStorage.clear
+    this.router.navigate(['welcome'])
   }
 }

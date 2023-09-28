@@ -6,6 +6,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ProfileViewComponent } from '../profile-view/profile-view.component';
 
 import { Router } from '@angular/router';
+import { MovieDetailDialogComponent } from '../movie-detail-dialog/movie-detail-dialog.component';
 
 
 @Component({
@@ -23,7 +24,7 @@ export class MovieCardComponent {
   ) { } // why curly braces here?
 
 
-  // this is a lifecycle hook which runs everytime componennt is initialised
+  // this is a lifecycle hook which runs everytime component is initialised
   ngOnInit(): void {
     this.getMovies();
   }
@@ -40,28 +41,58 @@ export class MovieCardComponent {
     this.router.navigate(['profile'])
   }
 
-  showDirector(movie : any): void {
+  openGenreDialog(genre: any): void {
+    this.dialog.open(MovieDetailDialogComponent, {
+      data: {
+        title: genre.Name,
+        content: genre.Description,
+      }
+    })
+  }
 
-    return movie.director
+  openSynopsisDialog(synopsis: string): void {
+    this.dialog.open(MovieDetailDialogComponent, {
+      data: {
+        title: "Description",
+        content: synopsis,
+      }
+    })
+  }
+
+  openDirectorDialog(director: any): void {
+    this.dialog.open(MovieDetailDialogComponent, {
+      data: {
+        title: director.Name,
+        content: director.Bio,
+      }
+    })
+  }
+
+  logoutUser(): void {
+    localStorage.clear
+    this.router.navigate(['welcome'])
+  }
+
+  // showDirector(movie : any): void {
+
+  //   this.dialog.open()
     
-    }
+  //   }
   
 
-  // addToFavorites(movie: any): void {
-  //   this.fetchApiData.addFavoriteMovie(movie.id).subscribe({
-  //     next: (result) => {
-  //       this.snackBar.open(result, 'successfuly added movie to favorites', {
-  //         duration: 2000
-  //       });
-  //     },
-  //     error: (error) => {
-  //       this.snackBar.open(error, 'Error', {
-  //         duration: 2000
-  //       });
-  //     }
-  //   })
-  // }
-  //   logoutUser(): void {
-  //     this.fetchApiData.l
-  //   }
+  addToFavorites(movie: any): void {
+    this.fetchApiData.addFavoriteMovie(movie._id).subscribe({
+      next: (result) => {
+        this.snackBar.open(result, 'successfuly added movie to favorites', {
+          duration: 2000
+        });
+      },
+      error: (error) => {
+        this.snackBar.open(error, 'Error', {
+          duration: 2000
+        });
+      }
+    })
+  }
+   
 }

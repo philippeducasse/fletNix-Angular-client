@@ -5,8 +5,13 @@
         routerLink="/movies"
         >
         All Movies
-            </button>
-        <button mat-menu-item>Logout</button>
+        </button>
+        <button
+        mat-menu-item
+        routerLink="/welcome"
+        >
+        Logout
+        </button>
       </mat-menu>
       
       <button mat-icon-button [matMenuTriggerFor]="appMenu">
@@ -21,7 +26,7 @@
           <input
             matInput
             [(ngModel)]="userData.Username"
-            placeholder="userData.Username"
+            placeholder="Username"
             type="text"
             name="Username"
             required
@@ -42,7 +47,7 @@
             matInput
             [(ngModel)]="userData.Email"
             type = "email"
-            placeholder="update your Email"
+            placeholder="Email"
             name="Email"
             required
           >
@@ -51,8 +56,7 @@
           <input
             matInput
             [(ngModel)]="userData.Birthday"
-            type = "date"
-            placeholder="update your Birthday"  
+            type = "date" 
             name="Birthday"
           >
         </mat-form-field>
@@ -75,3 +79,18 @@
         </button>
     </mat-card-actions>
   </mat-card>
+  <ng-container *ngIf="userData.Favorites && userData.Favorites.length > 0; else noFavorites">
+    <h2>Your Favorite Movies:</h2>
+    <mat-card *ngFor="let movie of userData.Favorites;" style="flex: 1 1 auto;">
+      <mat-card-header>
+        <mat-card-title>{{movie.Title}}</mat-card-title>
+        <mat-card-subtitle>Directed by: {{movie.Director}}</mat-card-subtitle>
+      </mat-card-header>
+      <img src={{movie.ImageUrl}} alt={{movie.Title}} />
+    </mat-card>
+  </ng-container>
+    
+  <ng-template #noFavorites>
+    <p>You have no favorite movies.</p>
+    <!-- You can add additional content or instructions here -->
+  </ng-template>
