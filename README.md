@@ -1,3 +1,28 @@
+## fletNix Angular App ##
+
+This app allows users to access a library of movies; displaying information about each movies, such as a synposis, genre, and director. Users can register an account, login, browse through the list of movies, see movies of similar genres, and add movies to a list of favorites, which then appears on their profile page. Users can also update their credentials and delete their account.
+
+This project was built using Angular to create the front-end of the app and is a Single Page Application (SPA). The app is connected to a API which was created in another project (see <a>https://github.com/philippeducasse/movie_api</a>). 
+
+Documentation for this project was recording using TypeDoc
+
+## Screenshot ## 
+
+<img src="/screenshot.png">
+
+## Link ##
+
+<a>https://philippeducasse.github.io/fletNix-Angular-client/</a>
+
+## Technologies used
+
+- Angular
+- TypeScript
+- Angular CLI
+- Angular Material (UI library)
+- TypeDoc (documentation)
+
+
 # FletNixAngularClient
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.0.
@@ -28,6 +53,4 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 
 Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
 
-## Further help
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
