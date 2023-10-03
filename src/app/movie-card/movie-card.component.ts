@@ -29,6 +29,8 @@ export class MovieCardComponent {
     this.getMovies();
   }
 
+  // TODO: add movies array to localstorage so that they can be accessed on profile view
+  // THEN: write filter logic for displaying favorite movies from IDs in "favorites" array
   getMovies(): void {
     this.fetchApiData.getAllMovies().subscribe((resp: any) => {
       this.movies = resp;
