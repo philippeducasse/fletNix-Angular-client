@@ -41,6 +41,10 @@ export class ProfileViewComponent implements OnInit{
   getUser(): User {
     return JSON.parse(localStorage.getItem('user') || '{}');
   }
+
+  getFavorites(): void {
+    return 
+  }
   // logic for update user function
   updateUser(): void {
     this.fetchApiData.updateUser(this.userData).subscribe({

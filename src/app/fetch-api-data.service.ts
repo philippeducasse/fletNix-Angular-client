@@ -5,7 +5,7 @@ import { Observable, throwError } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 //Declaring the api url that will provide data for the client app
-const apiUrl = 'https://fletnix-s949.onrender.com/';
+const apiUrl = 'https://fletnix-b399cde14eec.herokuapp.com/';
 // @ are called decorators, tells Angular to use data from above imports for styling
 // additionally, this tells angular that this service will be available everywhere ('root')
 @Injectable({
@@ -56,7 +56,7 @@ export class FetchApiDataService {
   // api to get single movie endpoint
   getMovie(title: string): Observable<any> {
     const token = localStorage.getItem('token');
-    return this.http.get(apiUrl + 'movies' + title, {
+    return this.http.get(apiUrl + 'movies/' + title, {
       headers: new HttpHeaders({
         Authorization: 'Bearer ' + token,
       })
@@ -83,7 +83,7 @@ export class FetchApiDataService {
 
   getGenre(genre: string): Observable<any> {
     const token = localStorage.getItem('token');
-    return this.http.get(apiUrl + 'genres' + genre, {
+    return this.http.get(apiUrl + 'genres/' + genre, {
       headers: new HttpHeaders({
         Authorization: 'Bearer ' + token,
       })
