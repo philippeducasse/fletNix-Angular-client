@@ -41,7 +41,7 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 
 ## Deploy 
 
-This project is hosting using gh pages:
+This project is hosted using gh pages:
 
 npx ngh --dir=dist/flet-nix-angular-client  
 

@@ -3,9 +3,9 @@ import { FetchApiDataService } from '../fetch-api-data.service';
 
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ProfileViewComponent } from '../profile-view/profile-view.component';
 
 import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { MovieDetailDialogComponent } from '../movie-detail-dialog/movie-detail-dialog.component';
 
 
@@ -21,8 +21,13 @@ export class MovieCardComponent {
     public snackBar: MatSnackBar,
     public dialog: MatDialog,
     public router: Router,
+
   ) { } // why curly braces here?
 
+  // toggle favorite btn color
+  // sets isclicked to an array of boolean values of length movies.length. fill() sets all their default values to false
+
+  isClicked: boolean[] = Array(this.movies.length).fill(false); 
 
   // this is a lifecycle hook which runs everytime component is initialised
   ngOnInit(): void {
@@ -38,9 +43,8 @@ export class MovieCardComponent {
       return this.movies
     });
   }
-
   openProfilePage(): void {
-    this.router.navigate(['profile'])
+    this.router.navigate(['profile'], {state: {movies: this.movies}})
   }
 
   openGenreDialog(genre: any): void {
@@ -82,9 +86,12 @@ export class MovieCardComponent {
   //   }
   
 
-  addToFavorites(movie: any): void {
+  addToFavorites(movie: any, index: number): void {
+    
     this.fetchApiData.addFavoriteMovie(movie._id).subscribe({
       next: (result) => {
+        console.log(result)
+        this.isClicked[index] = true
         this.snackBar.open(result, 'successfuly added movie to favorites', {
           duration: 2000
         });

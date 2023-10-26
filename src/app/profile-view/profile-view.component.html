@@ -1,27 +1,31 @@
-<mat-card>
-    <mat-menu #appMenu="matMenu">
-        <button 
-        mat-menu-item
-        routerLink="/movies"
-        >
-        All Movies
-        </button>
-        <button
-        mat-menu-item
-        routerLink="/welcome"
-        >
-        Logout
-        </button>
-      </mat-menu>
-      
-      <button mat-icon-button [matMenuTriggerFor]="appMenu">
-        <mat-icon>more_vert</mat-icon>
+<mat-toolbar color = "primary" class="navbar" >
+  <button mat-button routerLink="/movies" class="fletnix-header">fletNix</button>
+  <span><button
+      class="nav-item"
+      mat-button
+      routerLink="/profile"
+  >
+      Profile
+  </button></span>
+  <span>
+      <button 
+      class="nav-item"
+      mat-button
+      routerLink="/welcome"
+      (click) = "logoutUser()"
+      >
+          Logout
       </button>
+  </span>
+</mat-toolbar>
+
+<mat-card class="profile-page">
+    
     <mat-card-header>
-      <mat-card-title>Update your profile</mat-card-title>
+      <mat-card-title class="profile-page__title">Update your profile</mat-card-title>
     </mat-card-header>
     <mat-card-content>
-      <form>
+      <form class="profile-form">
         <mat-form-field>
           <input
             matInput
@@ -79,7 +83,8 @@
         </button>
     </mat-card-actions>
   </mat-card>
-  <ng-container *ngIf="userData.Favorites && userData.Favorites.length > 0; else noFavorites">
+  <div class="favorite-movies">
+  <ng-container *ngIf="userData.Favorites && userData.Favorites.length > 0; else noFavorites" >
     <h2>Your Favorite Movies:</h2>
     <mat-card *ngFor="let movie of userData.Favorites;" style="flex: 1 1 auto;">
       <mat-card-header>
@@ -89,6 +94,7 @@
       <img src={{movie.ImageUrl}} alt={{movie.Title}} />
     </mat-card>
   </ng-container>
+  </div>
     
   <ng-template #noFavorites>
     <p>You have no favorite movies.</p>

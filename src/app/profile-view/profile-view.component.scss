@@ -1,0 +1,18 @@
+.profile-page{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto ;
+    padding-bottom: 2%
+}
+.profile-page__title{
+    font-size: 23;
+    margin: 15px 0 30px
+}
+.profile-form{
+    display: flex;
+    flex-direction: column;
+}
+.favorite-movies{
+    margin: 2% 5%;
+}

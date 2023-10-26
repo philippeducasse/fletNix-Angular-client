@@ -36,14 +36,17 @@ $fletNix-Angular-client-theme: mat.define-light-theme((
 
 html, body { height: 100%; }
 body {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  
-  font-family: Roboto, "Helvetica Neue", sans-serif; };
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+ };
 
-app-movie-card{
-  display: flex;
-  max-width: 80vw;
-  width: 80vw;
+.navbar{
+    width: 100%;
+    justify-content: space-around;
+  }
+.fletnix-header{
+  font-size: 26px;
+}
+.nav-item{
+  font-size: 20px;
 }

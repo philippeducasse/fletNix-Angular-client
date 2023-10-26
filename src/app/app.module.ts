@@ -16,6 +16,8 @@ import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { FormsModule } from '@angular/forms';
 import {MatMenuModule} from '@angular/material/menu';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatButtonToggleModule} from '@angular/material/button-toggle'; 
 
 import { UserRegistrationFormComponent } from './user-registration-form/user-registration-form.component';
 import { UserLoginFormComponent } from './user-login-form/user-login-form.component';
@@ -31,7 +33,7 @@ import { MovieDetailDialogComponent } from './movie-detail-dialog/movie-detail-d
 const appRoutes: Routes = [
   { path: 'welcome', component: WelcomePageComponent },
   { path: 'movies', component: MovieCardComponent },
-  { path: 'profile', component: ProfileViewComponent},
+  { path: 'profile', component: ProfileViewComponent, data: {state: 'HELLO'}},
   { path: '', redirectTo: 'welcome', pathMatch: 'prefix' },
 ];
 
@@ -60,6 +62,8 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes),
     MatIconModule,
     MatMenuModule,
+    MatToolbarModule,
+    MatButtonToggleModule,
     
   ],
   providers: [],
