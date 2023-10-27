@@ -176,9 +176,9 @@ export class FetchApiDataService {
     const token = localStorage.getItem('token');
     const user = JSON.parse(localStorage.getItem('user') || '{}');
 
-    const index = user.FavoriteMovies.indexOf(movieId);
+    const index = user.Favorites.indexOf(movieId);
     if (index >= 0) {
-      user.FavoriteMovies.splice(index, 1);
+      user.Favorites.splice(index, 1);
     }
     localStorage.setItem('user', JSON.stringify(user));
 

@@ -5,9 +5,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { Router } from '@angular/router';
-import { ActivatedRoute } from '@angular/router';
 import { MovieDetailDialogComponent } from '../movie-detail-dialog/movie-detail-dialog.component';
 
+type User = { _id?: string, Username?: string, Password?: string, Email?: string, Birthday?: any, Favorites?: Array<any> }
 
 @Component({
   selector: 'app-movie-card',
@@ -15,6 +15,8 @@ import { MovieDetailDialogComponent } from '../movie-detail-dialog/movie-detail-
   styleUrls: ['./movie-card.component.scss']
 })
 export class MovieCardComponent {
+  user: User = {};
+  userName: string = this.user.Username  as string
   movies: any[] = [];
   constructor(
     public fetchApiData: FetchApiDataService,
@@ -22,12 +24,12 @@ export class MovieCardComponent {
     public dialog: MatDialog,
     public router: Router,
 
-  ) { } // why curly braces here?
+  ) { }
 
   // toggle favorite btn color
   // sets isclicked to an array of boolean values of length movies.length. fill() sets all their default values to false
 
-  isClicked: boolean[] = Array(this.movies.length).fill(false); 
+  isFavorite: boolean[] = Array(this.movies.length).fill(false); 
 
   // this is a lifecycle hook which runs everytime component is initialised
   ngOnInit(): void {
@@ -44,7 +46,8 @@ export class MovieCardComponent {
     });
   }
   openProfilePage(): void {
-    this.router.navigate(['profile'], {state: {movies: this.movies}})
+    const state :{movies: any[]}=  {movies: this.movies}
+    this.router.navigate(['profile'], {state})
   }
 
   openGenreDialog(genre: any): void {
@@ -78,21 +81,19 @@ export class MovieCardComponent {
     localStorage.clear
     this.router.navigate(['welcome'])
   }
-
-  // showDirector(movie : any): void {
-
-  //   this.dialog.open()
-    
-  //   }
-  
+  getUser(): User {
+    this.user = JSON.parse(localStorage.getItem('user') || '{}');
+    return this.user
+  }
 
   addToFavorites(movie: any, index: number): void {
     
     this.fetchApiData.addFavoriteMovie(movie._id).subscribe({
       next: (result) => {
         console.log(result)
-        this.isClicked[index] = true
-        this.snackBar.open(result, 'successfuly added movie to favorites', {
+        this.isFavorite[index] = !this.isFavorite
+        this.fetchApiData.getFavoriteMovies(this.userName)
+        this.snackBar.open('successfuly added movie to favorites', 'ok',{
           duration: 2000
         });
       },
@@ -103,5 +104,23 @@ export class MovieCardComponent {
       }
     })
   }
-   
+    // remove movie from favorites
+
+
+  removeFromFavorites(movie:any, index: number): void {
+    this.fetchApiData.deleteFavoriteMovie(movie._id).subscribe({
+      next: () => {
+        this.isFavorite[index] = !this.isFavorite
+        this.snackBar.open('Successfully removed from favorites', 'OK', {
+          duration: 2000
+        });
+      },
+      error: (error) => {
+        this.snackBar.open(error, 'Error', {
+          duration: 2000
+        });
+      }
+    });
+  }
 }
+
