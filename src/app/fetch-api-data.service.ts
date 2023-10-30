@@ -157,8 +157,9 @@ export class FetchApiDataService {
     const token = localStorage.getItem('token');
     const user = JSON.parse(localStorage.getItem('user') || '{}');
     const favorites = user.Favorites
-
+    console.log(movieId)
     favorites.push(movieId);
+    localStorage.setItem('user', JSON.stringify(user));
 
     return this.http.post(apiUrl + `users/${user.Username}/movies/${movieId}`, {}, {
       headers: new HttpHeaders({
@@ -182,7 +183,7 @@ export class FetchApiDataService {
     }
     localStorage.setItem('user', JSON.stringify(user));
 
-    return this.http.delete(apiUrl + `users/${user.Username}/${movieId}`, {
+    return this.http.delete(apiUrl + `users/${user.Username}/movies/${movieId}`, {
       headers: new HttpHeaders({
         Authorization: 'Bearer ' + token,
       })

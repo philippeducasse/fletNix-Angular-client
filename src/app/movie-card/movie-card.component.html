@@ -45,20 +45,20 @@
                 
                 Synopsis
             </button>
-            <div *ngIf="!isFavorite">
+            <div *ngIf="!isFavorite; else isFavorite">
                 <button>
                     <mat-icon 
                     (click) = "addToFavorites(movie, i)"
                     >favorite</mat-icon>
                 </button>
             </div>
-            <div *ngIf="isFavorite;">
+            <ng-template #isFavorite>
                 <button>
                     <mat-icon class="icon-red"
                     (click) = "removeFromFavorites(movie, i)"
                     >favorite</mat-icon>
                 </button>
-            </div>
+            </ng-template>
         </mat-card-actions>
     </mat-card>
 </div>

@@ -29,11 +29,15 @@ export class MovieCardComponent {
   // toggle favorite btn color
   // sets isclicked to an array of boolean values of length movies.length. fill() sets all their default values to false
 
-  isFavorite: boolean[] = Array(this.movies.length).fill(false); 
+  isFavorite: boolean[] = []
 
   // this is a lifecycle hook which runs everytime component is initialised
   ngOnInit(): void {
     this.getMovies();
+    console.log(this.isFavorite)
+    this.isFavorite = Array(this.movies.length).fill(false); 
+    console.log(this.isFavorite)
+
   }
 
   // TODO: add movies array to localstorage so that they can be accessed on profile view
@@ -91,7 +95,7 @@ export class MovieCardComponent {
     this.fetchApiData.addFavoriteMovie(movie._id).subscribe({
       next: (result) => {
         console.log(result)
-        this.isFavorite[index] = !this.isFavorite
+        this.isFavorite[index] = true
         this.fetchApiData.getFavoriteMovies(this.userName)
         this.snackBar.open('successfuly added movie to favorites', 'ok',{
           duration: 2000
@@ -110,7 +114,7 @@ export class MovieCardComponent {
   removeFromFavorites(movie:any, index: number): void {
     this.fetchApiData.deleteFavoriteMovie(movie._id).subscribe({
       next: () => {
-        this.isFavorite[index] = !this.isFavorite
+        this.isFavorite[index] = false
         this.snackBar.open('Successfully removed from favorites', 'OK', {
           duration: 2000
         });
