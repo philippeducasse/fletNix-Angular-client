@@ -84,19 +84,21 @@
     </mat-card-actions>
   </mat-card>
   <div class="favorite-movies">
-  <ng-container *ngIf="userData.Favorites && userData.Favorites.length > 0; else noFavorites" >
-    <h2>Your Favorite Movies:</h2>
-    <mat-card *ngFor="let movie of userData.Favorites;" style="flex: 1 1 auto;">
-      <mat-card-header>
-        <mat-card-title>{{movie.Title}}</mat-card-title>
-        <mat-card-subtitle>Directed by: {{movie.Director}}</mat-card-subtitle>
-      </mat-card-header>
-      <img src={{movie.ImageUrl}} alt={{movie.Title}} />
-    </mat-card>
-  </ng-container>
-  </div>
-    
-  <ng-template #noFavorites>
-    <p>You have no favorite movies.</p>
-    <!-- You can add additional content or instructions here -->
-  </ng-template>
+    <ng-container *ngIf="userData.Favorites && userData.Favorites.length > 0; else noFavorites" >
+      <h2>Your Favorite Movies:</h2>
+      <div class="card-container">
+  
+        <mat-card *ngFor="let movie of favoriteMovies;" style="flex: 1 1 auto;" class="movie-card">
+          <mat-card-header>
+            <mat-card-title class="movie-title">{{movie.Title}}</mat-card-title>
+          </mat-card-header>
+          <img src={{movie.ImageUrl}} alt={{movie.Title}} />
+        </mat-card>
+      </div>
+    </ng-container>
+    </div>
+      
+    <ng-template #noFavorites>
+      <p>You have no favorite movies.</p>
+      <!-- You can add additional content or instructions here -->
+    </ng-template>
