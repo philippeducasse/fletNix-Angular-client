@@ -7,7 +7,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { MovieDetailDialogComponent } from '../movie-detail-dialog/movie-detail-dialog.component';
 
-type User = { _id?: string, Username?: string, Password?: string, Email?: string, Birthday?: any, Favorites?: Array<any> }
+type User = { _id: string, Username: string, Password: string, Email: string, Birthday: any, Favorites: [] }
 
 @Component({
   selector: 'app-movie-card',
@@ -15,8 +15,6 @@ type User = { _id?: string, Username?: string, Password?: string, Email?: string
   styleUrls: ['./movie-card.component.scss']
 })
 export class MovieCardComponent {
-  user: User = {};
-  userName: string = this.user.Username  as string
   movies: any[] = [];
   constructor(
     public fetchApiData: FetchApiDataService,
@@ -29,14 +27,15 @@ export class MovieCardComponent {
   // toggle favorite btn color
   // sets isclicked to an array of boolean values of length movies.length. fill() sets all their default values to false
 
-  isFavorite: boolean[] = []
+  // isFavorite: boolean[] = []
 
   // this is a lifecycle hook which runs everytime component is initialised
   ngOnInit(): void {
     this.getMovies();
-    console.log(this.isFavorite)
-    this.isFavorite = Array(this.movies.length).fill(false); 
-    console.log(this.isFavorite)
+    console.log(this.movies)
+    // console.log(this.isFavorite)
+    // this.isFavorite = Array(this.movies.length).fill(false); 
+    // console.log(this.isFavorite)
 
   }
 
@@ -45,6 +44,8 @@ export class MovieCardComponent {
   getMovies(): void {
     this.fetchApiData.getAllMovies().subscribe((resp: any) => {
       this.movies = resp;
+      // this.isFavorite = Array(this.movies.length).fill(false);
+      // console.log(this.isFavorite)
       console.log(this.movies);
       return this.movies
     });
@@ -86,17 +87,17 @@ export class MovieCardComponent {
     this.router.navigate(['welcome'])
   }
   getUser(): User {
-    this.user = JSON.parse(localStorage.getItem('user') || '{}');
-    return this.user
+    let user = JSON.parse(localStorage.getItem('user') || '{}');
+    return user
   }
 
-  addToFavorites(movie: any, index: number): void {
-    
+  addToFavorites(movie: any): void {
+    console.log(movie)
+    // this.isFavorite[index] = true
     this.fetchApiData.addFavoriteMovie(movie._id).subscribe({
       next: (result) => {
         console.log(result)
-        this.isFavorite[index] = true
-        this.fetchApiData.getFavoriteMovies(this.userName)
+        // this.isFavorite[index] = true
         this.snackBar.open('successfuly added movie to favorites', 'ok',{
           duration: 2000
         });
@@ -111,15 +112,17 @@ export class MovieCardComponent {
     // remove movie from favorites
 
 
-  removeFromFavorites(movie:any, index: number): void {
+  removeFromFavorites(movie:any): void {
+    // this.isFavorite[index] = false
     this.fetchApiData.deleteFavoriteMovie(movie._id).subscribe({
-      next: () => {
-        this.isFavorite[index] = false
+      next: (result) => {
+        console.log(result)
         this.snackBar.open('Successfully removed from favorites', 'OK', {
           duration: 2000
         });
       },
       error: (error) => {
+        console.log(error)
         this.snackBar.open(error, 'Error', {
           duration: 2000
         });

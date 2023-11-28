@@ -58,13 +58,14 @@ export class ProfileViewComponent implements OnInit {
   // logic for update user function
   updateUser(): void {
     this.fetchApiData.updateUser(this.userData).subscribe({
-      next: () => {
-
+      next: (result) => {
+        console.log(result)
         this.snackBar.open('User updated successfully', 'OK', {
           duration: 2000
         });
       },
       error: (error) => {
+        console.log(error)
         this.snackBar.open(error, 'Error', {
           duration: 2000
         });
@@ -75,12 +76,14 @@ export class ProfileViewComponent implements OnInit {
   // delete user function
   deleteUser(): void {
     this.fetchApiData.deleteUser().subscribe({
-      next: () => {
+      next: (result) => {
+        console.log(result)
         this.snackBar.open('User successfully deleted', 'OK', {
           duration: 2000
         });
       },
       error: (error) => {
+        console.log(error)
         this.snackBar.open(error, 'Error', {
           duration: 2000
         });
