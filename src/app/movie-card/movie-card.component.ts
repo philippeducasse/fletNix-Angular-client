@@ -5,8 +5,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { Router } from '@angular/router';
-import { ActivatedRoute } from '@angular/router';
 import { MovieDetailDialogComponent } from '../movie-detail-dialog/movie-detail-dialog.component';
+
+type User = { _id: string, Username: string, Password: string, Email: string, Birthday: any, Favorites: Array<any> }
 
 
 @Component({
@@ -14,37 +15,50 @@ import { MovieDetailDialogComponent } from '../movie-detail-dialog/movie-detail-
   templateUrl: './movie-card.component.html',
   styleUrls: ['./movie-card.component.scss']
 })
-export class MovieCardComponent {
+export class MovieCardComponent implements OnInit {
   movies: any[] = [];
+  favorites: any[] = [];
+
   constructor(
     public fetchApiData: FetchApiDataService,
     public snackBar: MatSnackBar,
     public dialog: MatDialog,
     public router: Router,
 
-  ) { } // why curly braces here?
+  ) { }
 
   // toggle favorite btn color
   // sets isclicked to an array of boolean values of length movies.length. fill() sets all their default values to false
 
-  isClicked: boolean[] = Array(this.movies.length).fill(false); 
+  // isFavorite: boolean[] = []
 
   // this is a lifecycle hook which runs everytime component is initialised
-  ngOnInit(): void {
-    this.getMovies();
+  async ngOnInit(): Promise<void> {
+    const user = this.getUser();
+    await this.getMovies();
+    await this.fetchFavorites(user);
+    console.log(this.favorites);
   }
 
   // TODO: add movies array to localstorage so that they can be accessed on profile view
   // THEN: write filter logic for displaying favorite movies from IDs in "favorites" array
-  getMovies(): void {
-    this.fetchApiData.getAllMovies().subscribe((resp: any) => {
-      this.movies = resp;
-      console.log(this.movies);
-      return this.movies
+  getMovies(): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+      this.fetchApiData.getAllMovies().subscribe(
+        (resp: any) => {
+          this.movies = resp;
+          console.log(this.movies);
+          resolve(); // Resolve the Promise once movies are fetched
+        },
+        (error: any) => {
+          reject(error); // Reject the Promise if there's an error fetching movies
+        }
+      );
     });
   }
   openProfilePage(): void {
-    this.router.navigate(['profile'], {state: {movies: this.movies}})
+    const state: { movies: any[] } = { movies: this.movies }
+    this.router.navigate(['profile'], { state })
   }
 
   openGenreDialog(genre: any): void {
@@ -78,21 +92,19 @@ export class MovieCardComponent {
     localStorage.clear
     this.router.navigate(['welcome'])
   }
+  getUser(): User {
+    let user = JSON.parse(localStorage.getItem('user') || '{}');
+    return user
+  }
 
-  // showDirector(movie : any): void {
-
-  //   this.dialog.open()
-    
-  //   }
-  
-
-  addToFavorites(movie: any, index: number): void {
-    
+  addToFavorites(movie: any): void {
+    console.log(movie)
+    movie.isFavorite = true; // Update isFavorite property
     this.fetchApiData.addFavoriteMovie(movie._id).subscribe({
       next: (result) => {
         console.log(result)
-        this.isClicked[index] = true
-        this.snackBar.open(result, 'successfuly added movie to favorites', {
+        // this.isFavorite[index] = true
+        this.snackBar.open('successfuly added movie to favorites', 'ok', {
           duration: 2000
         });
       },
@@ -103,5 +115,44 @@ export class MovieCardComponent {
       }
     })
   }
-   
+  // remove movie from favorites
+
+
+  removeFromFavorites(movie: any): void {
+    // this.isFavorite[index] = false
+    movie.isFavorite = false; // Update isFavorite property
+    this.fetchApiData.deleteFavoriteMovie(movie._id).subscribe({
+      next: (result) => {
+        console.log(result)
+        this.snackBar.open('Successfully removed from favorites', 'OK', {
+          duration: 2000
+        });
+      },
+      error: (error) => {
+        console.log(error)
+        this.snackBar.open(error, 'Error', {
+          duration: 2000
+        });
+      }
+    });
+  }
+  async fetchFavorites(user: User): Promise<void> {
+    try {
+      const resp: any = await this.fetchApiData.getFavoriteMovies(user.Username).toPromise();
+      this.favorites = resp;
+  
+      // Update movies to add isFavorite property
+      this.movies = this.movies.map(movie => {
+        if (this.favorites.some(favorite => favorite === movie._id)) {
+          return { ...movie, isFavorite: true };
+        } else {
+          return { ...movie, isFavorite: false };
+        }
+      });
+  
+      console.log(this.movies);
+    } catch (error) {
+      console.error(error);
+    }
+  }
 }

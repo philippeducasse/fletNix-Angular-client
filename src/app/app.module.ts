@@ -33,7 +33,7 @@ import { MovieDetailDialogComponent } from './movie-detail-dialog/movie-detail-d
 const appRoutes: Routes = [
   { path: 'welcome', component: WelcomePageComponent },
   { path: 'movies', component: MovieCardComponent },
-  { path: 'profile', component: ProfileViewComponent, data: {state: 'HELLO'}},
+  { path: 'profile', component: ProfileViewComponent},
   { path: '', redirectTo: 'welcome', pathMatch: 'prefix' },
 ];
 

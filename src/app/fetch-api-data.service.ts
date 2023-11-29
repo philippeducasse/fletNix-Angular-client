@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { catchError } from 'rxjs/operators';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { Observable, throwError, EMPTY } from 'rxjs';
 import { map } from 'rxjs/operators';
+
 
 //Declaring the api url that will provide data for the client app
 const apiUrl = 'https://fletnix-b399cde14eec.herokuapp.com/';
@@ -157,8 +158,9 @@ export class FetchApiDataService {
     const token = localStorage.getItem('token');
     const user = JSON.parse(localStorage.getItem('user') || '{}');
     const favorites = user.Favorites
-
+    console.log(movieId)
     favorites.push(movieId);
+    localStorage.setItem('user', JSON.stringify(user));
 
     return this.http.post(apiUrl + `users/${user.Username}/movies/${movieId}`, {}, {
       headers: new HttpHeaders({
@@ -176,13 +178,13 @@ export class FetchApiDataService {
     const token = localStorage.getItem('token');
     const user = JSON.parse(localStorage.getItem('user') || '{}');
 
-    const index = user.FavoriteMovies.indexOf(movieId);
+    const index = user.Favorites.indexOf(movieId);
     if (index >= 0) {
-      user.FavoriteMovies.splice(index, 1);
+      user.Favorites.splice(index, 1);
     }
     localStorage.setItem('user', JSON.stringify(user));
 
-    return this.http.delete(apiUrl + `users/${user.Username}/${movieId}`, {
+    return this.http.delete(apiUrl + `users/${user.Username}/movies/${movieId}`, {
       headers: new HttpHeaders({
         Authorization: 'Bearer ' + token,
       })
@@ -195,15 +197,25 @@ export class FetchApiDataService {
   private handleError(error: HttpErrorResponse): Observable<never> {
     if (error.error instanceof ErrorEvent) {
       console.error('Some error occurred:', error.error.message);
+    } else if (error.status === 200) {
+      // If the status code is 200, it's a successful response, handle it accordingly
+      console.log('Success:', error.statusText);
+      return EMPTY; // Return an observable indicating successful operation
     } else {
+      // For other status codes, log the error details
       console.error(
         `Error Status code ${error.status}, ` +
         `Error body is: ${error.error}`
       );
     }
-    return throwError(() => new Error('Something bad happened; please try again later.')
-    ).pipe(catchError(() => throwError(() => new Error('Something went wrong.'))));
+    
+    // Return an observable indicating an error occurred
+    return throwError(() => new Error('Something bad happened; please try again later.'))
+      .pipe(
+        catchError(() => throwError(() => new Error('Something went wrong.')))
+      );
   }
-
 }
+
+
 
