@@ -87,23 +87,7 @@ export class ProfileViewComponent implements OnInit {
       }
     });
   }
-  // remove movie from favorites
-
-  //should be (movies: any?)
-  // removeFromFavorites(): void {
-  //   this.fetchApiData.deleteFavoriteMovie(this.favoriteMovies).subscribe({
-  //     next: (result) => {
-  //       this.snackBar.open(result, 'OK', {
-  //         duration: 2000
-  //       });
-  //     },
-  //     error: (error) => {
-  //       this.snackBar.open(error, 'Error', {
-  //         duration: 2000
-  //       });
-  //     }
-  //   });
-  // }
+  
   logoutUser(): void {
     localStorage.clear
     this.router.navigate(['welcome'])
