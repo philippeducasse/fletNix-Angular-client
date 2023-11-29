@@ -45,7 +45,8 @@
                 
                 Synopsis
             </button>
-            <div *ngIf="!user.favorites.includes(movie._id); else isFavorite">
+            <div *ngIf="!movie.isFavorite; else isFavorite">
+                
                 <button>
                     <mat-icon 
                     (click) = "addToFavorites(movie)"
