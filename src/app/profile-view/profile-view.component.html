@@ -1,90 +1,47 @@
-<mat-toolbar color = "primary" class="navbar" >
+<mat-toolbar color="primary" class="navbar">
   <button mat-button routerLink="/movies" class="fletnix-header">fletNix</button>
-  <span><button
-      class="nav-item"
-      mat-button
-      routerLink="/profile"
-  >
+  <span><button class="nav-item" mat-button routerLink="/profile">
       Profile
-  </button></span>
+    </button></span>
   <span>
-      <button 
-      class="nav-item"
-      mat-button
-      routerLink="/welcome"
-      (click) = "logoutUser()"
-      >
-          Logout
-      </button>
+    <button class="nav-item" mat-button routerLink="/welcome" (click)="logoutUser()">
+      Logout
+    </button>
   </span>
 </mat-toolbar>
 
 <mat-card class="profile-page">
-    
-    <mat-card-header>
-      <mat-card-title class="profile-page__title">Update your profile</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <form class="profile-form">
-        <mat-form-field>
-          <input
-            matInput
-            [(ngModel)]="userData.Username"
-            placeholder="Username"
-            type="text"
-            name="Username"
-            required
-          >
-          </mat-form-field>
-          <mat-form-field>
-          <input
-            matInput
-            [(ngModel)]="userData.Password"
-            type = "password"
-            placeholder="Password"
-            name="Password"
-            required
-          >
-        </mat-form-field>
-        <mat-form-field>
-          <input
-            matInput
-            [(ngModel)]="userData.Email"
-            type = "email"
-            placeholder="Email"
-            name="Email"
-            required
-          >
-        </mat-form-field>
-        <mat-form-field>
-          <input
-            matInput
-            [(ngModel)]="userData.Birthday"
-            type = "date" 
-            name="Birthday"
-          >
-        </mat-form-field>
-      </form>
-    </mat-card-content>
-    <mat-card-actions>
-        <button
-          mat-raised-button
-          (click)="updateUser()"
-          color="primary"
-        >
-          update
-        </button>
-        <button
-          mat-raised-button
-          (click)="deleteUser()"
-          color="danger"
-        >
-          delete profile
-        </button>
-    </mat-card-actions>
-  </mat-card>
-  <div class="favorite-movies">
-  <ng-container *ngIf="userData.Favorites && userData.Favorites.length > 0; else noFavorites" >
+
+  <mat-card-header>
+    <mat-card-title class="profile-page__title">Update your profile</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <form class="profile-form">
+      <mat-form-field>
+        <input matInput [(ngModel)]="userData.Username" placeholder="Username" type="text" name="Username" required>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput [(ngModel)]="userData.Password" type="password" placeholder="Password" name="Password" required>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput [(ngModel)]="userData.Email" type="email" placeholder="Email" name="Email" required>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput [(ngModel)]="userData.Birthday" type="date" name="Birthday">
+      </mat-form-field>
+    </form>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button (click)="updateUser()" color="primary">
+      update
+    </button>
+    <button mat-raised-button (click)="deleteUser()" color="danger">
+      delete profile
+    </button>
+  </mat-card-actions>
+</mat-card>
+<div class="favorite-movies">
+  <ng-container *ngIf="userData.Favorites && userData.Favorites.length > 0; else noFavorites">
     <h2>Your Favorite Movies:</h2>
     <div class="card-container">
 
@@ -96,9 +53,9 @@
       </mat-card>
     </div>
   </ng-container>
-  </div>
-    
-  <ng-template #noFavorites>
-    <p>You have no favorite movies.</p>
-    <!-- You can add additional content or instructions here -->
-  </ng-template>
+</div>
+
+<ng-template #noFavorites>
+  <p>You have no favorite movies.</p>
+  <!-- You can add additional content or instructions here -->
+</ng-template>
