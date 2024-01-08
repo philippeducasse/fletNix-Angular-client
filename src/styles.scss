@@ -33,13 +33,23 @@ $fletNix-Angular-client-theme: mat.define-light-theme((
 // that you are using.
 @include mat.all-component-themes($fletNix-Angular-client-theme);
 
-
+// GENRAL
 html, body { height: 100%; }
 body {
     margin: 0;
     font-family: Roboto, "Helvetica Neue", sans-serif;
  };
 
+// LOGIN 6 SIGNUP FORMS
+
+.login-card{
+  padding: 10px;
+}
+.login-title{
+  padding-bottom: 15px;
+}
+
+// NAVBAR
 .navbar{
     width: 100%;
     justify-content: space-around;
@@ -51,6 +61,7 @@ body {
   font-size: 20px;
 }
 
+// MAINVIEW
 .card-container{
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;

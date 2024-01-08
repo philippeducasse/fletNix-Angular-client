@@ -12,10 +12,18 @@ export class MovieDetailDialogComponent implements OnInit{
     public data: {
       title: string,
       content: string,
+      confirm?: {
+        text: string,
+        function: () => void // Replace '() => void' with the appropriate function signature
+      }
     }
   ) {}
 
   ngOnInit(): void {
     
   }
+  executeConfirmation(func: () => void): void {
+  // Execute the function passed as a parameter
+  func();
+}
 }

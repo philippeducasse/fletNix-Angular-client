@@ -47,14 +47,14 @@
             </button>
             <div *ngIf="!movie.isFavorite; else isFavorite">
                 
-                <button>
-                    <mat-icon 
+                <button class="favorite-button">
+                    <mat-icon class="icon-grey"
                     (click) = "addToFavorites(movie)"
                     >favorite</mat-icon>
                 </button>
             </div>
             <ng-template #isFavorite>
-                <button>
+                <button class="favorite-button">
                     <mat-icon class="icon-red"
                     (click) = "removeFromFavorites(movie)"
                     >favorite</mat-icon>

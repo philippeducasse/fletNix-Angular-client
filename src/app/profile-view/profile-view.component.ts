@@ -3,6 +3,7 @@ import { FetchApiDataService } from '../fetch-api-data.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { MovieDetailDialogComponent } from '../movie-detail-dialog/movie-detail-dialog.component';
 
 
 type User = { _id?: string, Username?: string, Password?: string, Email?: string, Birthday?: any, Favorites?: Array<any> }
@@ -23,8 +24,9 @@ export class ProfileViewComponent implements OnInit {
     public fetchApiData: FetchApiDataService,
     public snackBar: MatSnackBar,
     public router: Router,
+    public dialog: MatDialog,
   ) {
-    const state:{movies: any[]}= this.router.getCurrentNavigation()?.extras.state as any
+    const state: { movies: any[] } = this.router.getCurrentNavigation()?.extras.state as any
     console.log(state && state['movies'])
     this.allMovies = state && state['movies']
   }
@@ -40,10 +42,9 @@ export class ProfileViewComponent implements OnInit {
       Birthday: user.Birthday || "",
       Favorites: user.Favorites || [],
     }
-    console.log(this.userData)
     // gets movies from main view
     this.getFavorites()
-    
+
   }
 
 
@@ -61,38 +62,56 @@ export class ProfileViewComponent implements OnInit {
       next: (result) => {
         console.log(result)
         this.snackBar.open('User updated successfully', 'OK', {
-          duration: 2000
+          duration: 4000
         });
       },
       error: (error) => {
         console.log(error)
-        this.snackBar.open(error, 'Error', {
-          duration: 2000
+        this.snackBar.open(error, 'OK', {
+          duration: 4000
         });
       }
     });
   }
-
-  // delete user function
   deleteUser(): void {
+    this.dialog.open(MovieDetailDialogComponent, {
+      data: {
+        title: "Delete Account",
+        content: 'Are you sure?',
+        confirm: {
+          text: 'Delete', // Text for the confirmation button
+          function:
+            () => this.confirmDeleteUser()
+        }
+      }
+    }
+    )
+  }
+ 
+  
+  // delete user function
+  confirmDeleteUser(): void {
     this.fetchApiData.deleteUser().subscribe({
       next: (result) => {
         console.log(result)
         this.snackBar.open('User successfully deleted', 'OK', {
-          duration: 2000
+          duration: 4000
         });
+        this.dialog.closeAll()
+        this.router.navigate(['welcome']);
       },
       error: (error) => {
         console.log(error)
         this.snackBar.open(error, 'Error', {
-          duration: 2000
+          duration: 4000
         });
+        this.dialog.closeAll()
       }
     });
   }
   
   logoutUser(): void {
-    localStorage.clear
+    localStorage.clear()
     this.router.navigate(['welcome'])
   }
 }

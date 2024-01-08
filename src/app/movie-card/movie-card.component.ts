@@ -104,13 +104,13 @@ export class MovieCardComponent implements OnInit {
       next: (result) => {
         console.log(result)
         // this.isFavorite[index] = true
-        this.snackBar.open('successfuly added movie to favorites', 'ok', {
-          duration: 2000
+        this.snackBar.open('Successfuly added movie to favorites', 'OK', {
+          duration: 4000
         });
       },
       error: (error) => {
         this.snackBar.open(error, 'Error', {
-          duration: 2000
+          duration: 4000
         });
       }
     })
@@ -122,16 +122,15 @@ export class MovieCardComponent implements OnInit {
     // this.isFavorite[index] = false
     movie.isFavorite = false; // Update isFavorite property
     this.fetchApiData.deleteFavoriteMovie(movie._id).subscribe({
-      next: (result) => {
-        console.log(result)
+      next: () => {
+        console.log('TEST')
         this.snackBar.open('Successfully removed from favorites', 'OK', {
-          duration: 2000
+          duration: 4000
         });
       },
       error: (error) => {
-        console.log(error)
-        this.snackBar.open(error, 'Error', {
-          duration: 2000
+        this.snackBar.open('Could not remove from favorites: '+ error, 'OK', {
+          duration: 4000
         });
       }
     });

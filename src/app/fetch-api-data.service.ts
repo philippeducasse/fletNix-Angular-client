@@ -25,7 +25,12 @@ export class FetchApiDataService {
   // Making the api call for the user registration endpoint
   public userRegistration(userDetails: any): Observable<any> {
     return this.http.post(apiUrl + 'users', userDetails).pipe(
-      catchError(this.handleError)
+      catchError((error: any) => {
+        // Unauthorized access - Invalid signup credentials
+        if (error.status === 401 || error.status === 402 || error.status === 422) {
+          return throwError(() => new Error('Invalid input, please check again.'));
+        } else return this.handleError(error) // this is the generic error display
+      })
     );
   }
 
@@ -33,8 +38,13 @@ export class FetchApiDataService {
   public userLogin(userDetails: any): Observable<any> {
     console.log(userDetails)
     return this.http.post(apiUrl + 'login?' + new URLSearchParams(userDetails), {}).pipe(
-      catchError(this.handleError)
-    );
+      catchError((error: any) => {
+        // Unauthorized access - Invalid login credentials
+        if (error.status === 401 || error.status === 400) {
+          return throwError(() => new Error('Invalid username or password.'));
+        } else return this.handleError(error);
+      }
+      ));
   }
 
   /**
@@ -135,8 +145,12 @@ export class FetchApiDataService {
       })
     }).pipe(
       map(this.extractResponseData),
-      catchError(this.handleError)
-    );
+      catchError((error) => {
+        // Unauthorized access - Invalid signup credentials
+        if (error.status === 401 || error.status === 402 || error.status === 422) {
+          return throwError(() => new Error('Invalid input, please check again.'));
+        }else return this.handleError(error)}
+    ));
   }
   // delete user
 
@@ -144,11 +158,14 @@ export class FetchApiDataService {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
     const username = user.Username;
     const token = localStorage.getItem('token');
-    return this.http.delete(apiUrl + 'users/'+ username, {
+    return this.http.delete(apiUrl + 'users/' + username, {
+      observe: 'response',
+      responseType: 'text',
       headers: new HttpHeaders({
         Authorization: 'Bearer ' + token,
       })
     }).pipe(
+      map(this.extractResponseData),
       catchError(this.handleError)
     );
   }
@@ -185,12 +202,16 @@ export class FetchApiDataService {
     localStorage.setItem('user', JSON.stringify(user));
 
     return this.http.delete(apiUrl + `users/${user.Username}/movies/${movieId}`, {
+      observe: 'response',
+      responseType: 'text',
       headers: new HttpHeaders({
         Authorization: 'Bearer ' + token,
       })
     }).pipe(
       map(this.extractResponseData),
-      catchError(this.handleError)
+      catchError((error) => {
+        return this.handleError(error);
+      })
     );
   }
 
@@ -208,7 +229,7 @@ export class FetchApiDataService {
         `Error body is: ${error.error}`
       );
     }
-    
+
     // Return an observable indicating an error occurred
     return throwError(() => new Error('Something bad happened; please try again later.'))
       .pipe(

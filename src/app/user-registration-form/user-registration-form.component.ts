@@ -38,13 +38,13 @@ export class UserRegistrationFormComponent implements OnInit {
         console.log(result)
         this.dialogRef.close(); // This will close the modal on success!
         this.snackBar.open(result.Username + ' account successfully created', 'OK', {
-          duration: 2000
+          duration: 4000
         });
       },
       error: (error) => {
         // Handle errors here
-        this.snackBar.open(error, 'Error', { // Provide a more informative message
-          duration: 2000
+        this.snackBar.open(error, 'Close', { // Provide a more informative message
+          duration: 4000
         });
       }
     });

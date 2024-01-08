@@ -2,4 +2,6 @@
 <div mat-dialog-content>{{data.content}}</div>
 <div mat-dialog-actions>
   <button mat-button mat-dialog-close>Close</button>
+  
+  <button *ngIf="data.confirm" mat-button (click)="data.confirm.function()" color="danger"> Delete</button>
 </div>
