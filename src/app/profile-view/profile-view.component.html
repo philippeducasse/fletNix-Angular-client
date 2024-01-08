@@ -1,5 +1,5 @@
 <mat-toolbar color="primary" class="navbar">
-  <button mat-button routerLink="/movies" class="fletnix-header">fletNix</button>
+  <button mat-button routerLink="/movies" class="fletnix-header">FletNix</button>
   <span><button class="nav-item" mat-button routerLink="/profile">
       Profile
     </button></span>
@@ -53,9 +53,8 @@
       </mat-card>
     </div>
   </ng-container>
+  <ng-template #noFavorites>
+    <p id="no-favorites">You have no favorite movies.</p>
+    <!-- You can add additional content or instructions here -->
+  </ng-template>
 </div>
-
-<ng-template #noFavorites>
-  <p>You have no favorite movies.</p>
-  <!-- You can add additional content or instructions here -->
-</ng-template>

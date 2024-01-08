@@ -2,7 +2,7 @@
 <!-- let movies... refers to movies var declared in comp file -->
 
 <mat-toolbar color = "primary" class="navbar" >
-    <button mat-button routerLink="/movies" class="fletnix-header">fletNix</button>
+    <button mat-button routerLink="/movies" id="fletnix-header">FletNix</button>
     <span><button
         class="nav-item"
         mat-button
@@ -33,16 +33,18 @@
         <img src={{movie.ImageUrl}} alt={{movie.Title}}/>
         <mat-card-actions class = card-actions>
             <button mat-button color="primary"
-            (click)="openGenreDialog(movie.Genre)">
+            (click)="openGenreDialog(movie.Genre)"
+            class="card-btn">
                 Genre
             </button>
             <button mat-button color="primary"
-            (click)="openDirectorDialog(movie.Director)">
+            (click)="openDirectorDialog(movie.Director)"
+            class="card-btn">
                 Director
             </button>
             <button mat-button color="primary"
-            (click)="openSynopsisDialog(movie.Description)">
-                
+            (click)="openSynopsisDialog(movie.Description)"
+            class="card-btn">                
                 Synopsis
             </button>
             <div *ngIf="!movie.isFavorite; else isFavorite">

@@ -83,7 +83,7 @@ export class MovieCardComponent implements OnInit {
     this.dialog.open(MovieDetailDialogComponent, {
       data: {
         title: director.Name,
-        content: director.Bio,
+        content: director.About,
       }
     })
   }

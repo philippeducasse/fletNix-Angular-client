@@ -33,8 +33,14 @@ img {
 .movie-title{
   text-align: center;
   font-size: larger;
-  margin-bottom: 20px
+  margin-bottom: 20px;
+  font-weight: 500;
 }
 .card-actions{
-  margin: 10px 0
+  margin: 10px 0;
+}
+
+::ng-deep.mdc-button__label{
+  font-size: 16px!important;
+
 }

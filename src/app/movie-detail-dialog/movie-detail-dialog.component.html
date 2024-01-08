@@ -1,7 +1,7 @@
-<h1 mat-dialog-title>{{data.title}}</h1>
-<div mat-dialog-content>{{data.content}}</div>
+<h1 class = 'detail-title' mat-dialog-title>{{data.title}}</h1>
+<div class = 'detail-card' mat-dialog-content>{{data.content}}</div>
 <div mat-dialog-actions>
-  <button mat-button mat-dialog-close>Close</button>
+  <button class='detail-button' mat-button mat-dialog-close>Close</button>
   
-  <button *ngIf="data.confirm" mat-button (click)="data.confirm.function()" color="danger"> Delete</button>
+  <button  *ngIf="data.confirm" mat-button (click)="data.confirm.function()" color="danger"> Delete</button>
 </div>
