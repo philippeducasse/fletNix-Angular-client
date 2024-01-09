@@ -1,13 +1,21 @@
 <mat-toolbar color="primary" class="navbar">
-  <button mat-button headline-3 routerLink="/movies" id="fletnix-header">FletNix</button>
-  <span><button class="nav-item" mat-button routerLink="/profile">
-      Profile
-    </button></span>
-  <span>
-    <button class="nav-item" mat-button routerLink="/welcome" (click)="logoutUser()">
-      Logout
-    </button>
-  </span>
+  <div class="nav-items">
+      <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="home" color="accent"></mat-icon>
+      <button mat-button headline-3 routerLink="/movies" id="fletnix-header">FletNix</button>
+  </div>
+  <div class="nav-items">
+      <mat-icon aria-hidden="false" aria-label="Example person icon" fontIcon="person" color="accent"></mat-icon>
+      <button class="nav-item" headline-3 mat-button>
+          Profile
+      </button>
+  </div>
+  <div class="nav-items">
+      <mat-icon aria-hidden="false" aria-label="Example person icon" fontIcon="logout" color="accent"></mat-icon>
+
+      <button mat-button class="nav-item" headline-3 routerLink="/welcome" (click)="logoutUser()">
+          Logout
+      </button>
+  </div>
 </mat-toolbar>
 
 <mat-card class="profile-page">
@@ -33,10 +41,10 @@
   </mat-card-content>
   <mat-card-actions>
     <button mat-raised-button (click)="updateUser()" color="primary">
-      update
+      Update
     </button>
     <button mat-raised-button (click)="deleteUser()" color="warn" id="delete-btn">
-      delete profile
+      Delete profile
     </button>
   </mat-card-actions>
 </mat-card>

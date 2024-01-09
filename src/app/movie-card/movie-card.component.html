@@ -1,67 +1,54 @@
 <!-- ngFor directive used to display all returned movies -->
 <!-- let movies... refers to movies var declared in comp file -->
 
-<mat-toolbar color = "primary" class="navbar" >
-    <button  mat-button headline-3 routerLink="/movies" id="fletnix-header">FletNix</button>
-    <span><button
-        class="nav-item"
-        headline-3
-        mat-button
-        (click)="openProfilePage()"
-    >
-        Profile
-    </button></span>
-    <span>
-        <button 
-        mat-button
-        class="nav-item"
-        headline-3
-        routerLink="/welcome"
-        (click) = "logoutUser()"
-        >
+<mat-toolbar color="primary" class="navbar">
+    <div class="nav-items">
+        <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="home" color="accent"></mat-icon>
+        <button mat-button headline-3 routerLink="/movies" id="fletnix-header">FletNix</button>
+    </div>
+    <div class="nav-items">
+        <mat-icon aria-hidden="false" aria-label="Example person icon" fontIcon="person" color="accent"></mat-icon>
+        <button class="nav-item" headline-3 mat-button (click)="openProfilePage()">
+            Profile
+        </button>
+    </div>
+    <div class="nav-items">
+        <mat-icon aria-hidden="false" aria-label="Example person icon" fontIcon="logout" color="accent"></mat-icon>
+
+        <button mat-button class="nav-item" headline-3 routerLink="/welcome" (click)="logoutUser()">
             Logout
         </button>
-    </span>
+    </div>
 </mat-toolbar>
 
 <!-- CARDS -->
 
-<div class = "card-container">
-      <!-- This is a for loop that applies the HTML for each movie element -->
-    <mat-card *ngFor="let movie of movies" class="movie-card"> 
+<div class="card-container">
+    <!-- This is a for loop that applies the HTML for each movie element -->
+    <mat-card *ngFor="let movie of movies" class="movie-card">
         <mat-card-header>
             <mat-card-title class="movie-title">{{movie.Title}}</mat-card-title>
         </mat-card-header>
-        <img src={{movie.ImageUrl}} alt={{movie.Title}}/>
-        <mat-card-actions class = card-actions>
-            <button mat-button color="primary"
-            (click)="openGenreDialog(movie.Genre)"
-            class="card-btn">
+        <img src={{movie.ImageUrl}} alt={{movie.Title}} />
+        <mat-card-actions class=card-actions>
+            <button mat-button color="primary" (click)="openGenreDialog(movie.Genre)" class="card-btn">
                 Genre
             </button>
-            <button mat-button color="primary"
-            (click)="openDirectorDialog(movie.Director)"
-            class="card-btn">
+            <button mat-button color="primary" (click)="openDirectorDialog(movie.Director)" class="card-btn">
                 Director
             </button>
-            <button mat-button color="primary"
-            (click)="openSynopsisDialog(movie.Description)"
-            class="card-btn">                
+            <button mat-button color="primary" (click)="openSynopsisDialog(movie.Description)" class="card-btn">
                 Synopsis
             </button>
             <div *ngIf="!movie.isFavorite; else isFavorite">
-                
+
                 <button class="favorite-button">
-                    <mat-icon class="icon-grey"
-                    (click) = "addToFavorites(movie)"
-                    >favorite</mat-icon>
+                    <mat-icon class="icon-grey" (click)="addToFavorites(movie)">favorite</mat-icon>
                 </button>
             </div>
             <ng-template #isFavorite>
                 <button class="favorite-button">
-                    <mat-icon class="icon-red"
-                    (click) = "removeFromFavorites(movie)"
-                    >favorite</mat-icon>
+                    <mat-icon class="icon-red" (click)="removeFromFavorites(movie)">favorite</mat-icon>
                 </button>
             </ng-template>
         </mat-card-actions>
