@@ -2,9 +2,10 @@
 <!-- let movies... refers to movies var declared in comp file -->
 
 <mat-toolbar color = "primary" class="navbar" >
-    <button mat-button routerLink="/movies" id="fletnix-header">FletNix</button>
+    <button  mat-button headline-3 routerLink="/movies" id="fletnix-header">FletNix</button>
     <span><button
         class="nav-item"
+        headline-3
         mat-button
         (click)="openProfilePage()"
     >
@@ -12,8 +13,9 @@
     </button></span>
     <span>
         <button 
-        class="nav-item"
         mat-button
+        class="nav-item"
+        headline-3
         routerLink="/welcome"
         (click) = "logoutUser()"
         >

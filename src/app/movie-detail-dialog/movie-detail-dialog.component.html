@@ -3,5 +3,5 @@
 <div mat-dialog-actions>
   <button class='detail-button' mat-button mat-dialog-close>Close</button>
   
-  <button  *ngIf="data.confirm" mat-button (click)="data.confirm.function()" color="danger"> Delete</button>
+  <button *ngIf="data.confirm" mat-raised-button mat-dialog-close (click)="data.confirm.function()" color="warn"> Delete</button>
 </div>
