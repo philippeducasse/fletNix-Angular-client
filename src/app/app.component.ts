@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'myFlix-Angular-client';
+  title = 'fletNix-Angular-client';
 }

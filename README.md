@@ -12,6 +12,7 @@ Documentation for this project was recording using TypeDoc
 
 ## Link ##
 
+
 <a>https://philippeducasse.github.io/fletNix-Angular-client/</a>
 
 ## Technologies used
