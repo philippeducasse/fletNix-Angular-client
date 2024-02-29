@@ -19,7 +19,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./user-login-form.component.scss']
 })
 export class UserLoginFormComponent implements OnInit {
-  @Input() userData = { Username: '', Password: '' };
+  @Input() userData = { Username: 'testuser', Password: 'password' };
   
   constructor(
     public fetchApiData: FetchApiDataService,
